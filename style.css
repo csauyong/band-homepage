@@ -489,9 +489,9 @@ section {
 @media (max-width: 768px) {
     .hero-title {
         font-size: 2rem;
-        letter-spacing: 1em;
+        letter-spacing: 1rem;
         /* Scaled down for mobile */
-        text-indent: 1em;
+        text-indent: 1rem;
     }
 
     .navbar {
