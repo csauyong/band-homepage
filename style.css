@@ -494,6 +494,10 @@ section {
         text-indent: 1rem;
     }
 
+    .hero-subtitle {
+        font-size: 1.5rem;
+    }
+
     .navbar {
         padding: 1rem 1.5rem;
         flex-direction: row;
