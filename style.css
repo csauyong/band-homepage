@@ -512,11 +512,11 @@ section {
         /* Make text smaller to fit */
     }
 
-    .hero-title {
-        font-size: 2.5rem;
-    }
-
-    .hero-subtitle {
-        font-size: 1.5rem;
+    .mv-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 3rem;
+        /* Increased gap for a less crowded feel */
+        margin-top: 3rem;
     }
 }
