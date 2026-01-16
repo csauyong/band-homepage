@@ -345,48 +345,65 @@ section {
 /* MV Grid */
 .mv-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    /* Increased gap for a less crowded feel */
+    margin-top: 3rem;
 }
 
+/* MV Card: Glassmorphism Container */
 .mv-card {
-    background: rgba(17, 17, 17, 0.8);
-    /* Semi-transparent card */
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    /* Extremely subtle white tint */
+    backdrop-filter: blur(12px);
+    /* Strong blur to distinguish from background */
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 16px;
+    /* More rounded for a modern look */
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #333;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Thin, soft border */
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
 }
 
+/* Hover Effect: Soft Glow & Expansion */
 .mv-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
-    border-color: var(--accent-color);
+    transform: translateY(-12px) scale(1.02);
+    border-color: rgba(255, 255, 255, 0.4);
+    /* Border brightens on hover */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(255, 255, 255, 0.05);
+    /* Internal glow */
 }
 
+/* Thumbnail Styling */
 .mv-thumbnail {
     width: 100%;
     aspect-ratio: 16 / 9;
     background: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Info Section Typography */
 .mv-info {
-    padding: 1.5rem;
+    padding: 1.8rem;
 }
 
 .mv-info h4 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-color);
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
+    color: #ffffff;
 }
 
 .mv-info p {
     font-size: 0.9rem;
+    line-height: 1.7;
     color: var(--secondary-text);
+    font-weight: 300;
+    letter-spacing: 0.05em;
 }
 
 /* Footer & Contact */
