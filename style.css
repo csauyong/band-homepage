@@ -374,7 +374,7 @@ section {
 
 /* Horizontal Scroll Section */
 .horizontal-scroll-section {
-    height: 200vh;
+    height: 400vh;
     /* Reduced from 300vh for faster scroll */
     position: relative;
     /* Context for sticky */
