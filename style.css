@@ -412,14 +412,19 @@ section {
 
 /* MV Card: Glassmorphism Container */
 .mv-card {
-    min-width: 60vw;
-    /* Much larger for impact */
-    max-width: none;
-    /* Remove restriction */
+    width: 60vw;
+    /* Fixed width for impact */
+    max-width: 60vw;
+    /* prevent stretching */
+    min-width: 0;
+    /* remove min constraint */
     flex: 0 0 auto;
     /* Don't shrink */
     scroll-snap-align: center;
     /* Snap to center */
+
+    white-space: normal;
+    /* force text wrap */
 
     background: rgba(255, 255, 255, 0.03);
     /* Extremely subtle white tint */
@@ -651,10 +656,16 @@ section {
     }
 
     .mv-card {
-        min-width: 75vw;
-        /* Reduce size as requested */
+        width: 75vw;
+        /* strict width */
+        max-width: 75vw;
+        /* strict max-width */
+        min-width: 0;
+        /* Override any min-width */
         flex: 0 0 auto;
         scroll-snap-align: center;
         margin-right: 0;
+        white-space: normal;
+        /* Ensure text wraps */
     }
 }
