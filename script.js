@@ -43,50 +43,76 @@ document.addEventListener('DOMContentLoaded', () => {
     // Navbar Scroll Effect continued...
 
 
-    // Horizontal Scroll Trigger
+    // --- COMBINED SMOOTH SCROLL & PARALLAX LOGIC ---
+
     const scrollSection = document.querySelector('.horizontal-scroll-section');
     const stickyWrapper = document.querySelector('.sticky-wrapper');
     const mvGrid = document.querySelector('.mv-grid');
+    const background = document.querySelector('.global-parallax');
 
-    if (scrollSection && stickyWrapper && mvGrid) {
-        window.addEventListener('scroll', () => {
+    // Variables for smoothing
+    let currentTranslateX = 0;
+    let targetTranslateX = 0;
+
+    // Animation Loop (Runs 60fps for smooth motion)
+    function animate() {
+        // 1. FIX: Parallax runs here so it updates constantly
+        if (background) {
+            const speed = parseFloat(background.getAttribute('data-speed')) || 0.1;
+            // Directly use window.scrollY for parallax
+            const yPos = -(window.scrollY * speed);
+            background.style.transform = `translateY(${yPos}px)`;
+        }
+
+        // 2. FIX: Smooth Horizontal Scroll using "Lerp"
+        if (scrollSection && stickyWrapper && mvGrid) {
+            // "Lerp" formula: Current = Current + (Target - Current) * Ease
+            // 0.05 is the "weight". Lower = smoother/slower. Higher = more responsive.
+            currentTranslateX += (targetTranslateX - currentTranslateX) * 0.05;
+
+            // Apply the result
+            mvGrid.style.transform = `translateX(-${currentTranslateX}px)`;
+        }
+
+        // Keep the loop running
+        requestAnimationFrame(animate);
+    }
+
+    // Start the animation loop
+    animate();
+
+    // Scroll Listener (Only calculates the TARGET, doesn't move the element)
+    window.addEventListener('scroll', () => {
+        if (scrollSection && stickyWrapper && mvGrid) {
             const sectionRect = scrollSection.getBoundingClientRect();
             const sectionTop = sectionRect.top;
             const sectionHeight = scrollSection.offsetHeight;
             const windowHeight = window.innerHeight;
 
-            // Check if section is in view
-            if (sectionTop <= 0 && sectionTop > -(sectionHeight - windowHeight)) {
-                // Calculate how far we've scrolled into the section
-                const scrolledDistance = Math.abs(sectionTop);
+            // Calculate widths
+            const scrollWidth = mvGrid.scrollWidth - stickyWrapper.clientWidth;
 
-                // Max scrollable vertical distance
+            // Logic: Is the section currently sticking?
+            if (sectionTop <= 0 && sectionTop > -(sectionHeight - windowHeight)) {
+                // We are inside the scroll zone
+                const scrolledDistance = Math.abs(sectionTop);
                 const maxScroll = sectionHeight - windowHeight;
 
-                // Horizontal scrollable width (track width - viewport width)
-                // We use stickyWrapper.clientWidth to account for any potential scrollbars relative to the container
-                const scrollWidth = mvGrid.scrollWidth - stickyWrapper.clientWidth;
-
-                // Map vertical progress to horizontal offset
-                // Using a slight ease for smoother feel could be nice, but direct mapping is more responsive
                 const progress = scrolledDistance / maxScroll;
-                const translateX = progress * scrollWidth;
 
-                mvGrid.style.transform = `translateX(-${translateX}px)`;
+                // Update the TARGET value
+                targetTranslateX = progress * scrollWidth;
             }
-        });
-    }
-
-    // Parallax Effect
-    const background = document.querySelector('.global-parallax');
-    if (background) {
-        // Get the speed from the data-speed attribute (0.3)
-        const speed = background.getAttribute('data-speed');
-
-        // Calculate the movement
-        const yPos = -(window.pageYOffset * speed);
-
-        // Apply the movement using transform for better performance
-        background.style.transform = `translateY(${yPos}px)`;
-    }
+            // Logic: Have we scrolled PAST the section?
+            else if (sectionTop <= -(sectionHeight - windowHeight)) {
+                // Lock to the end
+                targetTranslateX = scrollWidth;
+            }
+            // Logic: Are we BEFORE the section?
+            else {
+                // Lock to the start
+                targetTranslateX = 0;
+            }
+        }
+    });
 });
