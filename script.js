@@ -150,6 +150,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Function to update embed themes
+    function updateEmbeds(isLightMode) {
+        // Spotify
+        const spotifyFrame = document.querySelector('.spotify iframe');
+        if (spotifyFrame) {
+            let src = spotifyFrame.src;
+            // Spotify: theme=0 is dark. We'll try removing it or switching to white for light mode.
+            // Using regex to replace or append.
+            if (isLightMode) {
+                // Switch to light (remove theme=0 or set theme=white if supported, verifying with remove first as per research)
+                // Actually research said &theme=white might work. Let's try replacing theme=0 with theme=white.
+                if (src.includes('theme=0')) {
+                    src = src.replace('theme=0', 'theme=white');
+                } else if (!src.includes('theme=white')) {
+                    src += '&theme=white';
+                }
+            } else {
+                // Switch to dark
+                if (src.includes('theme=white')) {
+                    src = src.replace('theme=white', 'theme=0');
+                } else if (!src.includes('theme=0')) {
+                    src += '&theme=0';
+                }
+            }
+            if (spotifyFrame.src !== src) spotifyFrame.src = src;
+        }
+
+        // Apple Music
+        const appleFrame = document.querySelector('.apple iframe');
+        if (appleFrame) {
+            let src = appleFrame.src;
+            // Apple Music: Append/Update theme parameter
+            const newTheme = isLightMode ? 'light' : 'dark';
+
+            // Check if theme param exists
+            if (src.includes('theme=')) {
+                src = src.replace(/theme=[a-z]+/, `theme=${newTheme}`);
+            } else {
+                // Append it. Check if it has other params (it currently doesn't, but safe to check)
+                const separator = src.includes('?') ? '&' : '?';
+                src += `${separator}theme=${newTheme}`;
+            }
+            if (appleFrame.src !== src) appleFrame.src = src;
+        }
+    }
+
     // Check for saved user preference
     const savedTheme = localStorage.getItem('theme');
     const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
@@ -158,8 +204,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedTheme === 'light' || (!savedTheme && systemPrefersLight)) {
         document.body.classList.add('light-theme');
         updateIcons(true);
+        updateEmbeds(true);
     } else {
         updateIcons(false);
+        updateEmbeds(false);
     }
 
     // Event Listener
@@ -168,6 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const isLightMode = document.body.classList.toggle('light-theme');
             localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
             updateIcons(isLightMode);
+            updateEmbeds(isLightMode);
         });
     }
 });

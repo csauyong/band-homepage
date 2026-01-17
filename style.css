@@ -93,8 +93,14 @@ body.light-theme .mv-info h4 {
     color: #000000;
 }
 
-body.light-theme .navbar.scrolled {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+body.light-theme .navbar {
+    /* Ensure nav text colors update correctly via variables, but force overrides if needed */
+}
+
+body.light-theme .nav-logo {
+    filter: invert(1);
+    opacity: 0.8;
+    /* Slightly reduce opacity to match text softness if needed, or keep 1 */
 }
 
 /* Navbar Scrolled State */
@@ -464,6 +470,8 @@ section {
 .streaming-embeds {
     display: flex;
     justify-content: center;
+    align-items: flex-start;
+    /* Prevent stretching to max height */
     gap: 2rem;
     flex-wrap: wrap;
     margin-bottom: 4rem;
@@ -477,6 +485,13 @@ section {
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s ease;
+}
+
+.embed-container iframe {
+    display: block;
+    /* Removes bottom whitespace from inline behavior */
+    width: 100%;
+    border: none;
 }
 
 .embed-container:hover {
