@@ -1,35 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-    const scrollSection = document.querySelector('.horizontal-scroll-section');
-    const mvGrid = document.querySelector('.mv-grid');
-    const stickyWrapper = document.querySelector('.sticky-wrapper');
-
-    // DYNAMIC HEIGHT CALCULATION
-    function setScrollHeight() {
-        if (scrollSection && mvGrid) {
-            // 1. Calculate how wide the horizontal content is
-            const horizontalScrollLength = mvGrid.scrollWidth;
-
-            // 2. Calculate the viewport width (what we see at once)
-            const viewportWidth = window.innerWidth;
-
-            // 3. The distance we need to scroll is the Total Width minus what is already visible
-            const distToScroll = horizontalScrollLength - viewportWidth;
-
-            // 4. Set the section height:
-            //    Scroll Distance + 1 Window Height (to account for the sticky container itself)
-            //    * Optional: Multiply distToScroll by 1.2 or 1.5 to make the scroll feel "heavier"/slower
-            const totalHeight = distToScroll * 1.5 + window.innerHeight;
-
-            scrollSection.style.height = `${totalHeight}px`;
-        }
-    }
-
-    // Run initially
-    setScrollHeight();
-
-    // Re-calculate if the user resizes their browser
-    window.addEventListener('resize', setScrollHeight);
     // --- 1. SCROLL REVEAL (Fade-in elements) ---
     const observerOptions = {
         root: null,
@@ -46,16 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
 
-    const revealElements = document.querySelectorAll('.scroll-reveal');
-    revealElements.forEach(element => {
+    document.querySelectorAll('.scroll-reveal').forEach(element => {
         observer.observe(element);
     });
 
-
     // --- 2. NAVBAR SCROLL EFFECT ---
     const navbar = document.querySelector('.navbar');
-
-    // We can leave this on the standard scroll listener as it's a simple toggle
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
             navbar.style.background = 'rgba(5, 5, 5, 0.2)';
@@ -72,71 +37,103 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-
-    // --- 3. HIGH PERFORMANCE SCROLL LOOP (Parallax + Horizontal) ---
+    // --- 3. ROBUST HORIZONTAL SCROLL & PARALLAX ---
+    const scrollSection = document.querySelector('.horizontal-scroll-section');
+    const stickyWrapper = document.querySelector('.sticky-wrapper');
+    const mvGrid = document.querySelector('.mv-grid');
     const background = document.querySelector('.global-parallax');
 
-    // Store the latest scroll position
-    let lastScrollY = window.scrollY;
-    let isTicking = false;
+    // State variables to sync "Resize" logic with "Scroll" logic
+    let scrollState = {
+        isVisible: false,
+        trackHeight: 0,      // The scrollable vertical distance (drag distance)
+        contentWidth: 0,     // Total width of MV cards
+        viewportWidth: 0,
+        buffer: 100          // Pixel buffer to prevent "fast exit" jumps
+    };
 
-    // Listen for scroll events, but only request a frame update
+    // A. CALCULATE DIMENSIONS (Responsive Friction)
+    function setDimensions() {
+        if (scrollSection && mvGrid) {
+            scrollState.isVisible = true;
+            scrollState.viewportWidth = window.innerWidth;
+            scrollState.contentWidth = mvGrid.scrollWidth;
+
+            // Calculate how far we physically need to move horizontally
+            const distToMove = scrollState.contentWidth - scrollState.viewportWidth;
+
+            // FIX 1: Responsive Friction
+            // Mobile (Touch) needs 1:1 feel. Desktop (Wheel) needs "weight" (1px move = 3px scroll)
+            const isMobile = window.innerWidth < 768;
+            const friction = isMobile ? 1.0 : 3.0;
+
+            // Calculate the required vertical height
+            // We multiply the distance by friction, then add the viewport (for sticky), plus a buffer
+            scrollState.trackHeight = (distToMove * friction);
+            const totalSectionHeight = scrollState.trackHeight + window.innerHeight + scrollState.buffer;
+
+            // Apply height to CSS
+            scrollSection.style.height = `${totalSectionHeight}px`;
+        }
+    }
+
+    // B. SCROLL UPDATE LOOP
+    function updateVisuals() {
+        const scrollY = window.scrollY;
+
+        // 1. Parallax (Simple & Clean)
+        if (background) {
+            const speed = parseFloat(background.getAttribute('data-speed')) || 0.1;
+            background.style.transform = `translateY(${-scrollY * speed}px)`;
+        }
+
+        // 2. Horizontal Scroll
+        if (scrollState.isVisible) {
+            const sectionRect = scrollSection.getBoundingClientRect();
+            const sectionTop = sectionRect.top;
+
+            // Check if we are in the active zone
+            // We use trackHeight (calculated above) to know exactly when to stop
+            if (sectionTop <= 0 && sectionTop > -(scrollState.trackHeight + scrollState.buffer)) {
+
+                // Calculate Progress
+                // "How many pixels have we scrolled?" / "How many pixels allow movement?"
+                let progress = Math.abs(sectionTop) / scrollState.trackHeight;
+
+                // Clamp progress between 0 and 1
+                // This prevents the "fast exit" by freezing the cards for the last few pixels (the buffer)
+                if (progress > 1) progress = 1;
+
+                // Move the grid
+                const translateX = progress * (scrollState.contentWidth - scrollState.viewportWidth);
+                mvGrid.style.transform = `translateX(-${translateX}px)`;
+
+            } else if (sectionTop > 0) {
+                // Before section: Reset to 0
+                mvGrid.style.transform = `translateX(0px)`;
+            } else {
+                // After section: Lock to end
+                const maxTranslate = scrollState.contentWidth - scrollState.viewportWidth;
+                mvGrid.style.transform = `translateX(-${maxTranslate}px)`;
+            }
+        }
+    }
+
+    // Initialize
+    setDimensions();
+
+    // Listeners
+    window.addEventListener('resize', setDimensions);
+
+    // High Performance Scroll Loop
+    let isTicking = false;
     window.addEventListener('scroll', () => {
-        lastScrollY = window.scrollY;
         if (!isTicking) {
             window.requestAnimationFrame(() => {
-                updateScrollVisuals(lastScrollY);
+                updateVisuals();
                 isTicking = false;
             });
             isTicking = true;
         }
-    }, { passive: true }); // 'passive: true' improves scrolling performance
-
-    // The function that actually moves things
-    function updateScrollVisuals(scrollY) {
-
-        // A. Parallax Effect
-        if (background) {
-            const speed = parseFloat(background.getAttribute('data-speed')) || 0.1;
-            // Direct mapping: No lag, just immediate position update
-            background.style.transform = `translateY(${-scrollY * speed}px)`;
-        }
-
-        // B. Horizontal Scroll Trigger
-        if (scrollSection && stickyWrapper && mvGrid) {
-            const sectionRect = scrollSection.getBoundingClientRect();
-            // Since we are inside a requestAnimationFrame, we can use the stored scrollY
-            // but getBoundingClientRect is safer for "sticky" calculations relative to viewport.
-
-            const sectionTop = sectionRect.top;
-            const sectionHeight = scrollSection.offsetHeight;
-            const windowHeight = window.innerHeight;
-
-            // Variables for calculation
-            let translateX = 0;
-            const scrollWidth = mvGrid.scrollWidth - stickyWrapper.clientWidth;
-            const maxScroll = sectionHeight - windowHeight;
-
-            // Logic: Where are we?
-            if (sectionTop <= 0 && sectionTop > -maxScroll) {
-                // ACTIVE: We are scrolling through the section
-                const progress = Math.abs(sectionTop) / maxScroll;
-                translateX = progress * scrollWidth;
-            }
-            else if (sectionTop <= -maxScroll) {
-                // FINISHED: We are past the section (lock to end)
-                translateX = scrollWidth;
-            }
-            else {
-                // BEFORE: We haven't reached it yet (lock to start)
-                translateX = 0;
-            }
-
-            // Apply immediately (No "Lerp" smoothing math = No Drift)
-            mvGrid.style.transform = `translateX(-${translateX}px)`;
-        }
-    }
-
-    // Initial call to set positions on load
-    updateScrollVisuals(window.scrollY);
+    }, { passive: true });
 });
