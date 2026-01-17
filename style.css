@@ -222,450 +222,469 @@ a {
     max-width: 700px;
     margin: 0 auto 3.5rem auto;
     line-height: 2;
-    opacity: 0;
-    animation: fadeInUp 1.2s ease forwards 1.1s;
-}
 
-/* Verse Source: Distinct non-italic style */
-.verse-source {
-    display: block;
-    /* Moves source to a new line */
-    font-style: normal;
-    /* Removes italics from the source */
-    font-size: 0.9rem;
-    font-family: var(--font-body);
-    /* Uses Sans-Serif for a modern contrast */
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-top: 1rem;
-    color: var(--secondary-text);
-}
-
-.cta-button {
-    display: inline-block;
-    padding: 1rem 3.5rem;
-    /* Wider padding for a more elegant shape */
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    /* Softer initial border */
-    background: transparent;
-    color: #ffffff;
-    text-transform: uppercase;
-
-    /* Matching the header aesthetic */
-    font-size: 0.8rem;
-    letter-spacing: 0.4em;
-    text-indent: 0.4em;
-    /* Centering fix for letter-spacing */
-    font-weight: 300;
-
-    /* Smooth transition for all properties */
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-
-    /* Animation settings */
-    opacity: 0;
-    animation: fadeInUp 1.2s ease forwards 1.4s;
-}
-
-.cta-button:hover {
-    background: #ffffff;
-    color: #000000;
-    border-color: #ffffff;
-    letter-spacing: 0.5em;
-    /* Slight expansion on hover */
-    text-indent: 0.5em;
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
-    /* Subtle glow */
-    transform: translateY(-3px);
-    /* Lifts the button slightly */
-}
-
-/* Optional: Add a subtle 'shimmer' effect */
-.cta-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(120deg,
-            transparent,
-            rgba(255, 255, 255, 0.1),
-            transparent);
-    transition: all 0.6s;
-}
-
-.cta-button:hover::before {
-    left: 100%;
-}
-
-/* Sections General */
-section {
-    padding: 6rem 2rem;
-    /* Slight blur for readability over the background image */
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-}
-
-.container {
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-.section-title {
-    font-size: 2.5rem;
-    text-align: center;
-    margin-bottom: 4rem;
-}
-
-/* Mission Section */
-.mission-section {
-    /* Semi-transparent dark background to reveal image behind */
-    background-color: var(--overlay-dark);
-}
-
-.mission-content {
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.mission-content h3 {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-}
-
-.mission-content p {
-    margin-bottom: 1.5rem;
-    font-size: 1.1rem;
-    color: var(--secondary-text);
-}
-
-/* Music Section */
-.music-section {
-    /* Slightly darker transparency for music section */
-    background-color: var(--overlay-dark);
-}
-
-/* Streaming Embeds */
-.streaming-embeds {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-    margin-bottom: 4rem;
-}
-
-.embed-container {
-    flex: 1;
-    min-width: 300px;
-    max-width: 450px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s ease;
-}
-
-.embed-container:hover {
-    transform: translateY(-5px);
-}
-
-/* Horizontal Scroll Section */
-.horizontal-scroll-section {
-    height: 400vh;
-    /* Reduced from 300vh for faster scroll */
-    position: relative;
-    /* Context for sticky */
-}
-
-.sticky-wrapper {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    width: 100%;
-    overflow: hidden;
-    /* No local scrollbars */
-    display: flex;
-    align-items: center;
-    /* Vertically center the track */
-}
-
-/* MV Grid: Now acts as the moving track */
-.mv-grid {
-    display: flex;
-    gap: 4rem;
-    width: max-content;
-    will-change: transform;
-
-    /* Center the first and last items */
-    /* Card width is 60vw. Remaining space is 40vw. Half is 20vw. */
-    padding-left: 20vw;
-    padding-right: 20vw;
-
-    margin-top: 0;
-}
-
-/* Hide scrollbar styles are no longer needed for mv-grid itself 
-   as it won't scroll internally */
-
-/* MV Card: Glassmorphism Container */
-.mv-card {
-    width: 60vw;
-    /* Fixed width for impact */
-    max-width: 60vw;
-    /* prevent stretching */
-    min-width: 0;
-    /* remove min constraint */
-    flex: 0 0 auto;
-    /* Don't shrink */
-    scroll-snap-align: center;
-    /* Snap to center */
-
-    white-space: normal;
-    /* force text wrap */
-
-    background: rgba(255, 255, 255, 0.03);
-    /* Extremely subtle white tint */
-    backdrop-filter: blur(12px);
-    /* Strong blur to distinguish from background */
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: 16px;
-    /* More rounded for a modern look */
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    /* Thin, soft border */
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-}
-
-/* Hover Effect: Soft Glow & Expansion */
-.mv-card:hover {
-    transform: translateY(-12px) scale(1.02);
-    border-color: rgba(255, 255, 255, 0.4);
-    /* Border brightens on hover */
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
-        0 0 20px rgba(255, 255, 255, 0.05);
-    /* Internal glow */
-}
-
-/* Thumbnail Styling */
-.mv-thumbnail {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    background: #000;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Info Section Typography */
-.mv-info {
-    padding: 1.8rem;
-}
-
-.mv-info h4 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    margin-bottom: 0.8rem;
-    color: #ffffff;
-}
-
-.mv-info p {
-    font-size: 0.9rem;
-    line-height: 1.7;
-    color: var(--secondary-text);
-    font-weight: 300;
-    letter-spacing: 0.05em;
-}
-
-/* Footer & Contact */
-.footer {
-    padding: 4rem 2rem;
-    background-color: var(--overlay-dark);
-    /* Almost solid for footer */
-}
-
-.contact-grid {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-    margin-bottom: 3rem;
-}
-
-.contact-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 250px;
-    padding: 2rem;
-    background: rgba(17, 17, 17, 0.8);
-    border: 1px solid #333;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    text-align: center;
-}
-
-.contact-card:hover {
-    border-color: var(--accent-color);
-    transform: translateY(-5px);
-    background: rgba(26, 26, 26, 0.9);
-}
-
-.contact-card .icon {
-    font-weight: 700;
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-    color: var(--accent-color);
-}
-
-.contact-card .text {
-    font-size: 0.9rem;
-    color: var(--secondary-text);
-    word-break: break-all;
-}
-
-.copyright {
-    color: var(--secondary-text);
-    font-size: 0.8rem;
-    margin-top: 2rem;
-    text-align: center;
-}
-
-/* Animations */
-@keyframes fadeInUp {
-    from {
+    /* Bible Verse Container */
+    .hero-verse {
+        font-family: var(--font-heading);
+        font-size: 1.3rem;
+        font-style: italic;
+        /* Italics applied ONLY to the quote now */
+        color: #e0e0e0;
+        max-width: 700px;
+        margin: 0 auto 3.5rem auto;
+        line-height: 2;
         opacity: 0;
-        transform: translateY(20px);
+        animation: fadeInUp 1.2s ease forwards 1.1s;
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.scroll-reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 1s ease;
-}
-
-.scroll-reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .navbar {
-        padding: 1rem 1rem;
-        /* Reduce padding */
-        flex-direction: row;
-        /* Keep in row */
-        flex-wrap: nowrap;
-        /* Prevent wrapping */
-        justify-content: space-between;
-        gap: 0.5rem;
-        /* Minimize gap */
-    }
-
-    .nav-left {
-        gap: 0.8rem;
-        /* Reduce gap between logo and socials */
-    }
-
-    .logo-container {
-        flex-shrink: 0;
-    }
-
-    .nav-logo {
-        height: 32px;
-        /* Slightly smaller logo */
-    }
-
-    .nav-socials {
+    .mobile-break {
         display: none;
-        /* Hide social icons on mobile to save space if needed, OR keep them but make them smaller. User said "icons and buttons separated into 2 lines", so space is tight. Let's keep them but small first. */
-        gap: 0.8rem;
     }
 
-    /* Re-enabling nav-socials for now but controlling size */
-    .nav-socials {
-        display: flex;
+    /* Verse Source: Distinct non-italic style */
+    .verse-source {
+        display: block;
+        /* Moves source to a new line */
+        font-style: normal;
+        /* Removes italics from the source */
+        font-size: 0.9rem;
+        font-family: var(--font-body);
+        /* Uses Sans-Serif for a modern contrast */
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        margin-top: 1rem;
+        color: var(--secondary-text);
     }
 
-    .social-icon {
-        width: 18px;
-        height: 18px;
-    }
-
-    .nav-links {
-        display: flex;
-        gap: 0.8rem;
+    .cta-button {
+        display: inline-block;
+        padding: 1rem 3.5rem;
+        /* Wider padding for a more elegant shape */
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        /* Softer initial border */
         background: transparent;
-        /* Ensure no weird background */
+        color: #ffffff;
+        text-transform: uppercase;
+
+        /* Matching the header aesthetic */
+        font-size: 0.8rem;
+        letter-spacing: 0.4em;
+        text-indent: 0.4em;
+        /* Centering fix for letter-spacing */
+        font-weight: 300;
+
+        /* Smooth transition for all properties */
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+
+        /* Animation settings */
+        opacity: 0;
+        animation: fadeInUp 1.2s ease forwards 1.4s;
     }
 
-    .nav-links a {
-        font-size: 0.75rem;
-        /* legible but compact */
-        padding: 0.2rem;
+    .cta-button:hover {
+        background: #ffffff;
+        color: #000000;
+        border-color: #ffffff;
+        letter-spacing: 0.5em;
+        /* Slight expansion on hover */
+        text-indent: 0.5em;
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+        /* Subtle glow */
+        transform: translateY(-3px);
+        /* Lifts the button slightly */
     }
 
-    /* MV Scroll - Mobile Native Scroll */
+    /* Optional: Add a subtle 'shimmer' effect */
+    .cta-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent);
+        transition: all 0.6s;
+    }
+
+    .cta-button:hover::before {
+        left: 100%;
+    }
+
+    /* Sections General */
+    section {
+        padding: 6rem 2rem;
+        /* Slight blur for readability over the background image */
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    /* Mission Section */
+    .mission-section {
+        /* Semi-transparent dark background to reveal image behind */
+        background-color: var(--overlay-dark);
+    }
+
+    .mission-content {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .mission-content h3 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .mission-content p {
+        margin-bottom: 1.5rem;
+        font-size: 1.1rem;
+        color: var(--secondary-text);
+    }
+
+    /* Music Section */
+    .music-section {
+        /* Slightly darker transparency for music section */
+        background-color: var(--overlay-dark);
+    }
+
+    /* Streaming Embeds */
+    .streaming-embeds {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-bottom: 4rem;
+    }
+
+    .embed-container {
+        flex: 1;
+        min-width: 300px;
+        max-width: 450px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s ease;
+    }
+
+    .embed-container:hover {
+        transform: translateY(-5px);
+    }
+
+    /* Horizontal Scroll Section */
     .horizontal-scroll-section {
-        height: auto !important;
-        /* Override JS height */
+        height: 400vh;
+        /* Reduced from 300vh for faster scroll */
+        position: relative;
+        /* Context for sticky */
     }
 
     .sticky-wrapper {
-        position: relative;
-        /* Remove sticky */
-        height: auto;
-        overflow: visible;
+        position: sticky;
         top: 0;
+        height: 100vh;
+        width: 100%;
+        overflow: hidden;
+        /* No local scrollbars */
+        display: flex;
+        align-items: center;
+        /* Vertically center the track */
     }
 
+    /* MV Grid: Now acts as the moving track */
     .mv-grid {
         display: flex;
-        gap: 1rem;
-        width: 100%;
-        /* Full width */
-        overflow-x: auto;
-        /* Enable native scroll */
-        scroll-snap-type: x mandatory;
-        padding: 0 1rem;
-        /* Standard padding */
+        gap: 4rem;
+        width: max-content;
+        will-change: transform;
+
+        /* Center the first and last items */
+        /* Card width is 60vw. Remaining space is 40vw. Half is 20vw. */
+        padding-left: 20vw;
+        padding-right: 20vw;
+
         margin-top: 0;
-        transform: none !important;
-        /* Override JS transform */
-
-        /* Hide scrollbar */
-        scrollbar-width: none;
-        /* Firefox */
-        -ms-overflow-style: none;
-        /* IE 10+ */
     }
 
-    .mv-grid::-webkit-scrollbar {
-        display: none;
-        /* Safari and Chrome */
-    }
+    /* Hide scrollbar styles are no longer needed for mv-grid itself 
+   as it won't scroll internally */
 
+    /* MV Card: Glassmorphism Container */
     .mv-card {
-        width: 75vw;
-        /* strict width */
-        max-width: 75vw;
-        /* strict max-width */
+        width: 60vw;
+        /* Fixed width for impact */
+        max-width: 60vw;
+        /* prevent stretching */
         min-width: 0;
-        /* Override any min-width */
+        /* remove min constraint */
         flex: 0 0 auto;
+        /* Don't shrink */
         scroll-snap-align: center;
-        margin-right: 0;
+        /* Snap to center */
+
         white-space: normal;
-        /* Ensure text wraps */
+        /* force text wrap */
+
+        background: rgba(255, 255, 255, 0.03);
+        /* Extremely subtle white tint */
+        backdrop-filter: blur(12px);
+        /* Strong blur to distinguish from background */
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 16px;
+        /* More rounded for a modern look */
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        /* Thin, soft border */
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
     }
-}
+
+    /* Hover Effect: Soft Glow & Expansion */
+    .mv-card:hover {
+        transform: translateY(-12px) scale(1.02);
+        border-color: rgba(255, 255, 255, 0.4);
+        /* Border brightens on hover */
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
+            0 0 20px rgba(255, 255, 255, 0.05);
+        /* Internal glow */
+    }
+
+    /* Thumbnail Styling */
+    .mv-thumbnail {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: #000;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Info Section Typography */
+    .mv-info {
+        padding: 1.8rem;
+    }
+
+    .mv-info h4 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        margin-bottom: 0.8rem;
+        color: #ffffff;
+    }
+
+    .mv-info p {
+        font-size: 0.9rem;
+        line-height: 1.7;
+        color: var(--secondary-text);
+        font-weight: 300;
+        letter-spacing: 0.05em;
+    }
+
+    /* Footer & Contact */
+    .footer {
+        padding: 4rem 2rem;
+        background-color: var(--overlay-dark);
+        /* Almost solid for footer */
+    }
+
+    .contact-grid {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-bottom: 3rem;
+    }
+
+    .contact-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 250px;
+        padding: 2rem;
+        background: rgba(17, 17, 17, 0.8);
+        border: 1px solid #333;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+
+    .contact-card:hover {
+        border-color: var(--accent-color);
+        transform: translateY(-5px);
+        background: rgba(26, 26, 26, 0.9);
+    }
+
+    .contact-card .icon {
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        color: var(--accent-color);
+    }
+
+    .contact-card .text {
+        font-size: 0.9rem;
+        color: var(--secondary-text);
+        word-break: break-all;
+    }
+
+    .copyright {
+        color: var(--secondary-text);
+        font-size: 0.8rem;
+        margin-top: 2rem;
+        text-align: center;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .scroll-reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 1s ease;
+    }
+
+    .scroll-reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .navbar {
+            padding: 1rem 1rem;
+            /* Reduce padding */
+            flex-direction: row;
+            /* Keep in row */
+            flex-wrap: nowrap;
+            /* Prevent wrapping */
+            justify-content: space-between;
+            gap: 0.5rem;
+            /* Minimize gap */
+        }
+
+        .nav-left {
+            gap: 0.8rem;
+            /* Reduce gap between logo and socials */
+        }
+
+        .logo-container {
+            flex-shrink: 0;
+        }
+
+        .nav-logo {
+            height: 32px;
+            /* Slightly smaller logo */
+        }
+
+        .nav-socials {
+            display: none;
+            /* Hide social icons on mobile to save space if needed, OR keep them but make them smaller. User said "icons and buttons separated into 2 lines", so space is tight. Let's keep them but small first. */
+            gap: 0.8rem;
+        }
+
+        /* Re-enabling nav-socials for now but controlling size */
+        .nav-socials {
+            display: flex;
+        }
+
+        .social-icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.8rem;
+            background: transparent;
+            /* Ensure no weird background */
+        }
+
+        .nav-links a {
+            font-size: 0.75rem;
+            /* Scaled down for mobile */
+            text-indent: 0.5rem;
+        }
+
+        .mobile-break {
+            display: block;
+        }
+
+        /* MV Scroll - Mobile Native Scroll */
+        .horizontal-scroll-section {
+            height: auto !important;
+            /* Override JS height */
+        }
+
+        .sticky-wrapper {
+            position: relative;
+            /* Remove sticky */
+            height: auto;
+            overflow: visible;
+            top: 0;
+        }
+
+        .mv-grid {
+            display: flex;
+            gap: 1rem;
+            width: 100%;
+            /* Full width */
+            overflow-x: auto;
+            /* Enable native scroll */
+            scroll-snap-type: x mandatory;
+            padding: 0 1rem;
+            /* Standard padding */
+            margin-top: 0;
+            transform: none !important;
+            /* Override JS transform */
+
+            /* Hide scrollbar */
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE 10+ */
+        }
+
+        .mv-grid::-webkit-scrollbar {
+            display: none;
+            /* Safari and Chrome */
+        }
+
+        .mv-card {
+            width: 75vw;
+            /* strict width */
+            max-width: 75vw;
+            /* strict max-width */
+            min-width: 0;
+            /* Override any min-width */
+            flex: 0 0 auto;
+            scroll-snap-align: center;
+            margin-right: 0;
+            white-space: normal;
+            /* Ensure text wraps */
+        }
+    }
