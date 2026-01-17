@@ -22,19 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 2. NAVBAR SCROLL EFFECT ---
     const navbar = document.querySelector('.navbar');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(5, 5, 5, 0.2)';
-            navbar.style.backdropFilter = 'blur(5px)';
-            navbar.style.webkitBackdropFilter = 'blur(5px)';
-            navbar.style.padding = '1rem 3rem';
-            navbar.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
-        } else {
-            navbar.style.background = 'transparent';
-            navbar.style.backdropFilter = 'blur(0px)';
-            navbar.style.webkitBackdropFilter = 'blur(0px)';
-            navbar.style.padding = '2rem 3rem';
-            navbar.style.borderBottom = '1px solid transparent';
-        }
+        navbar.classList.toggle('scrolled', window.scrollY > 50);
     });
 
     // --- 3. ROBUST HORIZONTAL SCROLL & PARALLAX ---
@@ -146,4 +134,40 @@ document.addEventListener('DOMContentLoaded', () => {
             isTicking = true;
         }
     }, { passive: true });
+    // --- 4. THEME TOGGLE LOGIC ---
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const sunIcon = document.querySelector('.sun-icon');
+    const moonIcon = document.querySelector('.moon-icon');
+
+    // Function to update icon visibility
+    function updateIcons(isLightMode) {
+        if (isLightMode) {
+            sunIcon.style.display = 'none';
+            moonIcon.style.display = 'block';
+        } else {
+            sunIcon.style.display = 'block';
+            moonIcon.style.display = 'none';
+        }
+    }
+
+    // Check for saved user preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+
+    // Apply initial theme
+    if (savedTheme === 'light' || (!savedTheme && systemPrefersLight)) {
+        document.body.classList.add('light-theme');
+        updateIcons(true);
+    } else {
+        updateIcons(false);
+    }
+
+    // Event Listener
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            const isLightMode = document.body.classList.toggle('light-theme');
+            localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
+            updateIcons(isLightMode);
+        });
+    }
 });

@@ -16,8 +16,94 @@
     --font-weight-light: 300;
     /* Standardized darkness and transparency */
     --overlay-light: rgba(5, 5, 5, 0.4);
-    --nav-bg: rgba(10, 10, 10, 0.4);
+    --nav-bg: rgba(5, 5, 5, 0.2);
+    /* Match original JS value for dark mode */
     --transition-speed: 0.4s;
+
+    /* Toggle Button Colors */
+    --toggle-text: #a0a0a0;
+    --toggle-hover: #ffffff;
+}
+
+/* Light Theme Variables */
+body.light-theme {
+    --bg-color: #f5f5f5;
+    /* Light Gray/White Background */
+    --text-color: #1a1a1a;
+    /* Dark Text */
+    --accent-color: #000000;
+    /* Black Accent */
+    --secondary-text: #555555;
+    /* Dark Gray Secondary */
+    --nav-bg: rgba(255, 255, 255, 0.85);
+    /* Whiter Nav Background */
+
+    --overlay-dark: rgba(255, 255, 255, 0.7);
+    /* Light overlay instead of dark */
+    --overlay-light: rgba(255, 255, 255, 0.5);
+
+    --toggle-text: #555555;
+    --toggle-hover: #000000;
+}
+
+body.light-theme .global-parallax {
+    filter: invert(1) hue-rotate(180deg) brightness(1.2);
+    /* Invert dark background to light */
+    opacity: 0.5;
+    /* Soften it */
+}
+
+body.light-theme .hero-title {
+    background: linear-gradient(to bottom, #1a1a1a 0%, #4a4a4a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: none;
+    /* Remove dark mode drop shadow or adjust it */
+    text-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .hero-verse {
+    color: #333333;
+}
+
+body.light-theme .cta-button {
+    border-color: rgba(0, 0, 0, 0.3);
+    color: #1a1a1a;
+}
+
+body.light-theme .cta-button:hover {
+    background: #000000;
+    color: #ffffff;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .mv-card {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+body.light-theme .mv-card:hover {
+    border-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .mv-info h4 {
+    color: #000000;
+}
+
+body.light-theme .navbar.scrolled {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar Scrolled State */
+.navbar.scrolled {
+    background: var(--nav-bg);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    padding: 1rem 3rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 * {
@@ -128,6 +214,29 @@ a {
     color: var(--accent-color);
     opacity: 1;
     transform: translateY(-2px);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--toggle-text);
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    color: var(--toggle-hover);
+    transform: rotate(15deg);
+}
+
+.theme-icon {
+    width: 20px;
+    height: 20px;
 }
 
 .nav-links {
@@ -309,9 +418,6 @@ a {
 /* Sections General */
 section {
     padding: 6rem 2rem;
-    /* Slight blur for readability over the background image */
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
 }
 
 .container {
