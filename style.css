@@ -488,54 +488,50 @@ section {
 .footer {
     padding: 4rem 2rem;
     background-color: var(--overlay-dark);
-    /* Almost solid for footer */
 }
 
-.contact-grid {
+/* Form Container */
+.form-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+    width: 100%;
+}
+
+.form-container iframe {
+    max-width: 640px;
+    width: 100%;
+    /* Ensure it doesn't break out on small screens */
+    background: transparent;
+    border-radius: 12px;
+}
+
+/* Footer Social Icons */
+.footer-socials {
     display: flex;
     justify-content: center;
     gap: 2rem;
-    flex-wrap: wrap;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
-.contact-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 250px;
-    padding: 2rem;
-    background: rgba(17, 17, 17, 0.8);
-    border: 1px solid #333;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    text-align: center;
-}
-
-.contact-card:hover {
-    border-color: var(--accent-color);
-    transform: translateY(-5px);
-    background: rgba(26, 26, 26, 0.9);
-}
-
-.contact-card .icon {
-    font-weight: 700;
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-    color: var(--accent-color);
-}
-
-.contact-card .text {
-    font-size: 0.9rem;
+.footer-icon {
+    width: 24px;
+    height: 24px;
     color: var(--secondary-text);
-    word-break: break-all;
+    transition: all 0.3s ease;
+    opacity: 0.8;
+}
+
+.footer-socials a:hover .footer-icon {
+    color: var(--accent-color);
+    opacity: 1;
+    transform: translateY(-3px) scale(1.1);
 }
 
 .copyright {
     color: var(--secondary-text);
     font-size: 0.8rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
     text-align: center;
 }
 
