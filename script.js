@@ -85,19 +85,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // B. SCROLL UPDATE LOOP
+    // B. SCROLL UPDATE LOOP
     function updateVisuals() {
-        // Stop if not visible (mobile)
-        if (!scrollState.isVisible) return;
-
         const scrollY = window.scrollY;
 
-        // 1. Parallax (Simple & Clean)
+        // 1. Parallax (Simple & Clean) - ALWAYS RUNS
         if (background) {
             const speed = parseFloat(background.getAttribute('data-speed')) || 0.1;
             background.style.transform = `translateY(${-scrollY * speed}px)`;
         }
 
-        // 2. Horizontal Scroll
+        // 2. Horizontal Scroll - ONLY IF VISIBLE (Desktop)
+        if (!scrollState.isVisible) return;
+
         if (scrollState.isVisible) {
             const sectionRect = scrollSection.getBoundingClientRect();
             const sectionTop = sectionRect.top;
