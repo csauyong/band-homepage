@@ -702,150 +702,183 @@ section {
 }
 
 /* Responsive */
+/* Responsive Mobile Styles */
 @media (max-width: 768px) {
 
+    /* 1. Layout Adjustments */
     .mobile-break {
         display: block;
-        /* Forces the line break on mobile */
         margin-bottom: 0.5rem;
-        /* Optional: Adds a little space between the lines */
     }
 
+    section {
+        padding: 4rem 1.5rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2.5rem;
+    }
+
+    /* 2. Navbar & Icon Fixes */
     .navbar {
-        padding: 1rem 1rem;
-        /* Reduce padding */
+        padding: 1rem 1.5rem;
         display: flex;
-        /* Back to flex for mobile */
         justify-content: space-between;
         align-items: center;
         gap: 0.5rem;
     }
 
-    /* .nav-left removed */
+    /* NAV LEFT: Social Icons (The Fix) */
+    .nav-socials {
+        position: relative;
+        z-index: 102; /* Highest priority so they sit on top */
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        
+        /* CRITICAL FIXES */
+        flex-shrink: 0; /* Forces browser to keep them full size (prevents squishing) */
+        min-width: 60px; /* Reserve physical space */
+    }
 
+    .nav-socials a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px; /* Slightly larger touch target */
+        height: 24px;
+    }
+
+    .social-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 18px; /* Explicitly set icon font size */
+        line-height: 1; /* Reset line height to prevent shifting */
+    }
+
+    /* NAV CENTER: Logo */
     .logo-container {
-        flex-shrink: 0;
-        display: block;
-        /* ensure visibility */
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%); /* Perfect centering */
+        width: auto;
+        
+        /* Interaction Fix */
+        pointer-events: none; /* Clicks pass through the container to elements below */
+        z-index: 100; /* Sits below socials/links but above background */
+        display: flex;
+        justify-content: center;
     }
 
     .nav-logo {
         height: 32px;
-        pointer-events: auto;
+        pointer-events: auto; /* Re-enable clicks just for the logo image */
     }
 
-    .nav-socials {
-        position: relative;
-        z-index: 100;
-        /* Higher number sits on top */
-        display: flex;
-        gap: 0.5rem;
-    }
-
-    .social-icon {
-        width: 16px;
-        height: 16px;
-    }
-
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        position: relative;
-        /* for absolute centering of logo */
-        align-items: center;
-    }
-
-    .logo-container {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        width: auto;
-        /* STOP it from stretching full width */
-        pointer-events: none;
-        /* Let clicks pass through the empty area */
-    }
-
-    /* Adjust links to be minimal or smaller to fit */
+    /* NAV RIGHT: Links & Toggle */
     .nav-links {
+        position: relative;
+        z-index: 102; /* Matches socials z-index */
         margin-left: 0;
-        /* Let flex space-between handle it */
-        gap: 0.5rem;
-    }
-
-    .nav-links a {
-        font-size: 0.7rem;
-        padding: 0.2rem;
-    }
-
-    .nav-separator {
-        height: 14px;
-        margin: 0 0.3rem;
-    }
-
-    .nav-links {
-        display: flex;
-        gap: 0.8rem;
+        gap: 1rem;
         background: transparent;
-        /* Ensure no weird background */
+        flex-shrink: 0; /* Prevent links from shrinking too much */
     }
 
     .nav-links a {
         font-size: 0.75rem;
-        /* legible but compact */
-        padding: 0.2rem;
+        padding: 0.4rem; /* Increase touch area */
     }
 
-    /* MV Scroll - Mobile Native Scroll */
+    .nav-separator {
+        height: 14px;
+        margin: 0 0.2rem;
+    }
+
+    /* 3. Hero Adjustments */
+    .hero-title {
+        font-size: 2.5rem;
+        letter-spacing: 0.5rem;
+        text-indent: 0.5rem;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        letter-spacing: 0.2em;
+    }
+
+    .hero-verse {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+
+    /* 4. Horizontal Scroll Reset (Native Mobile Scroll) */
     .horizontal-scroll-section {
-        height: auto !important;
-        /* Override JS height */
+        height: auto !important; /* Override JS height calculation */
     }
 
     .sticky-wrapper {
         position: relative;
-        /* Remove sticky */
         height: auto;
         overflow: visible;
         top: 0;
+        display: block; /* Reset flex */
     }
 
     .mv-grid {
         display: flex;
-        gap: 1rem;
+        gap: 1.5rem;
         width: 100%;
-        /* Full width */
-        overflow-x: auto;
-        /* Enable native scroll */
-        scroll-snap-type: x mandatory;
-        padding: 0 1rem;
-        /* Standard padding */
+        overflow-x: auto; /* Enable native swipe scrolling */
+        scroll-snap-type: x mandatory; /* Snap effect */
+        padding: 0 1.5rem 2rem 1.5rem; /* Right padding ensures last card is visible */
         margin-top: 0;
-        transform: none !important;
-        /* Override JS transform */
+        transform: none !important; /* Disable JS transform */
 
-        /* Hide scrollbar */
-        scrollbar-width: none;
-        /* Firefox */
-        -ms-overflow-style: none;
-        /* IE 10+ */
+        /* Hide Scrollbars */
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE */
     }
 
     .mv-grid::-webkit-scrollbar {
-        display: none;
-        /* Safari and Chrome */
+        display: none; /* Chrome/Safari */
     }
 
     .mv-card {
-        width: 75vw;
-        /* strict width */
-        max-width: 75vw;
-        /* strict max-width */
-        min-width: 0;
-        /* Override any min-width */
-        flex: 0 0 auto;
+        width: 80vw; /* Slightly wider for mobile impact */
+        max-width: 320px; /* Cap width */
+        min-width: 260px;
+        flex: 0 0 auto; /* Prevent shrinking */
         scroll-snap-align: center;
         margin-right: 0;
         white-space: normal;
-        /* Ensure text wraps */
+
+        /* Mobile specific card styles */
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(8px);
+    }
+
+    .mv-thumbnail {
+        aspect-ratio: 16 / 9;
+    }
+
+    .mv-info h4 {
+        font-size: 1.1rem;
+    }
+
+    /* 5. Footer & Form */
+    .footer {
+        padding: 3rem 1.5rem;
+    }
+
+    .form-container iframe {
+        height: 450px; /* Ensure form is tall enough on mobile */
+    }
+
+    .footer-socials {
+        gap: 1.5rem;
     }
 }
