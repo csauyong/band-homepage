@@ -43,13 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // A. CALCULATE DIMENSIONS (Responsive Friction)
     function setDimensions() {
         if (scrollSection && mvGrid) {
-            // Disable on mobile
-            if (window.innerWidth < 768) {
-                scrollState.isVisible = false;
-                scrollSection.style.height = 'auto';
-                mvGrid.style.transform = 'none';
-                return;
-            }
 
             scrollState.isVisible = true;
             scrollState.viewportWidth = window.innerWidth;
@@ -60,7 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Friction: Higher = Slower/Heavier scroll. 
             // 3.0 is good, but you can lower to 2.5 for "lighter" feel if needed.
-            const friction = 2.5;
+            // Faster on mobile
+            const isMobile = window.innerWidth < 768;
+            const friction = isMobile ? 1.5 : 2.5;
 
             // Calculate the ACTIVE scroll distance (The "Track")
             scrollState.trackHeight = distToMove * friction;

@@ -725,17 +725,19 @@ section {
 
     /* --- LEFT: Social Icons & Theme Toggle --- */
     .nav-socials {
-        display: flex !important; /* Force flex layout */
+        display: flex !important;
+        /* Force flex layout */
         align-items: center;
-        gap: 0.4rem; /* Space between icons */
-        
+        gap: 0.4rem;
+        /* Space between icons */
+
         /* CRITICAL: Prevent the container from collapsing to width: 0 */
-        flex-shrink: 0; 
-        min-width: 80px; 
-        
+        flex-shrink: 0;
+        min-width: 80px;
+
         /* Ensure it sits on top of the logo layer */
         position: relative;
-        z-index: 100; 
+        z-index: 100;
     }
 
     /* Fix for the Theme Toggle Button */
@@ -755,17 +757,20 @@ section {
         justify-content: center;
         width: 24px;
         height: 24px;
-        color: var(--text-color); /* Ensure they aren't transparent */
+        color: var(--text-color);
+        /* Ensure they aren't transparent */
     }
 
     /* CRITICAL SVG FIX: Force dimensions on the inline SVGs */
-    .social-icon, 
+    .social-icon,
     .theme-icon {
         width: 18px !important;
         height: 18px !important;
-        min-width: 18px !important; /* Stop iOS from squishing them */
+        min-width: 18px !important;
+        /* Stop iOS from squishing them */
         display: block;
-        fill: currentColor; /* Uses the parent text color */
+        fill: currentColor;
+        /* Uses the parent text color */
     }
 
     .nav-separator {
@@ -779,12 +784,14 @@ section {
         position: absolute;
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%); /* Perfect centering */
-        
+        transform: translate(-50%, -50%);
+        /* Perfect centering */
+
         /* Allow clicks to pass through empty space around logo */
-        pointer-events: none; 
-        z-index: 10; /* Lower than socials so icons remain clickable */
-        
+        pointer-events: none;
+        z-index: 10;
+        /* Lower than socials so icons remain clickable */
+
         width: fit-content;
         max-width: 120px;
         display: flex;
@@ -792,8 +799,10 @@ section {
     }
 
     .nav-logo {
-        height: 32px; /* Smaller logo for mobile */
-        pointer-events: auto; /* Re-enable clicks on the image itself */
+        height: 32px;
+        /* Smaller logo for mobile */
+        pointer-events: auto;
+        /* Re-enable clicks on the image itself */
     }
 
     /* --- RIGHT: Nav Text Links --- */
@@ -802,14 +811,17 @@ section {
         gap: 0.4rem;
         margin-left: 0;
         background: transparent;
-        flex-shrink: 0; /* Prevent shrinking */
-        z-index: 100; /* Match socials z-index */
+        flex-shrink: 0;
+        /* Prevent shrinking */
+        z-index: 100;
+        /* Match socials z-index */
     }
 
     .nav-links a {
         font-size: 0.75rem;
         padding: 0.4rem;
-        white-space: nowrap; /* Prevent text wrapping */
+        white-space: nowrap;
+        /* Prevent text wrapping */
     }
 
     /* --- 3. HERO SECTION TWEAKS --- */
@@ -831,54 +843,12 @@ section {
         line-height: 1.8;
     }
 
-    /* --- 4. SCROLL SECTION (Native Mobile Scroll) --- */
-    .horizontal-scroll-section {
-        height: auto !important; /* Override JS height */
-    }
-
-    .sticky-wrapper {
-        position: relative;
-        height: auto;
-        overflow: visible;
-        top: 0;
-        display: block;
-    }
-
-    .mv-grid {
-        display: flex;
-        gap: 1.5rem;
-        width: 100%;
-        overflow-x: auto; /* Native horizontal scroll */
-        scroll-snap-type: x mandatory;
-        padding: 0 1.5rem 2rem 1.5rem;
-        margin-top: 0;
-        transform: none !important; /* Disable JS transform */
-        
-        /* Hide scrollbars */
-        scrollbar-width: none; 
-        -ms-overflow-style: none;
-    }
-    
-    .mv-grid::-webkit-scrollbar {
-        display: none;
-    }
-
-    .mv-card {
-        width: 80vw;
-        max-width: 320px;
-        min-width: 260px;
-        flex: 0 0 auto;
-        scroll-snap-align: center;
-        white-space: normal;
-        margin-right: 0;
-    }
-    
-    /* --- 5. FOOTER & FORMS --- */
+    /* --- 4. FOOTER & FORMS --- */
     .footer {
         padding: 3rem 1.5rem;
     }
-    
+
     .form-container iframe {
-        height: 480px; 
+        height: 480px;
     }
 }
