@@ -746,8 +746,44 @@ section {
     }
 
     .nav-socials {
-        display: none;
-        /* Hide social icons on mobile to save space */
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .social-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        /* for absolute centering of logo */
+        align-items: center;
+    }
+
+    .logo-container {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    /* Adjust links to be minimal or smaller to fit */
+    .nav-links {
+        margin-left: 0;
+        /* Let flex space-between handle it */
+        gap: 0.5rem;
+    }
+
+    .nav-links a {
+        font-size: 0.7rem;
+        padding: 0.2rem;
+    }
+
+    .nav-separator {
+        height: 14px;
+        margin: 0 0.3rem;
     }
 
     .nav-links {
@@ -794,23 +830,7 @@ section {
        Use absolute positioning for logo.
        
     */
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        position: relative;
-        /* for absolute centering */
-    }
-
-    .logo-container {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .nav-links {
-        margin-left: auto;
-        /* Push to right */
-    }
+    /* .nav-links adjustments moved up */
 
     .nav-links a {
         font-size: 0.75rem;
