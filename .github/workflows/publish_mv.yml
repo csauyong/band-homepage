@@ -1,0 +1,81 @@
+name: Publish New MV
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  add-mv:
+    if: contains(github.event.issue.labels.*.name, 'automated-content')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Parse Issue Data
+        id: parse
+        uses: stefanbuck/github-issue-parser@v3
+        with:
+          template-path: .github/ISSUE_TEMPLATE/add_mv.yml
+
+      - name: Generate HTML and Update File
+        run: |
+          # Read variables from the parsed JSON
+          TITLE="${{ steps.parse.outputs.issueparser_song_title }}"
+          VID="${{ steps.parse.outputs.issueparser_video_id }}"
+          TEXT="${{ steps.parse.outputs.issueparser_scripture_text }}"
+          REF="${{ steps.parse.outputs.issueparser_scripture_ref }}"
+          
+          # Construct the HTML Block
+          # We use a temporary file to build the HTML string safely
+          cat <<EOF > new_block.html
+          
+                        <div class="mv-card">
+                            <div class="mv-thumbnail">
+                                <iframe width="100%" height="100%"
+                                    src="https://www.youtube.com/embed/$VID" 
+                                    title="$TITLE"
+                                    frameborder="0" loading="lazy"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
+                            <div class="mv-info">
+                                <h4>$TITLE</h4>
+                                <p>「$TEXT」<br>—— $REF</p>
+                            </div>
+                        </div>
+                        EOF
+
+          # Inject the content into index.html
+          # This replaces the marker with the New Content + The Marker (so it works next time too)
+          # We use python for safer text replacement than sed
+          python3 -c "
+          import os
+          
+          with open('new_block.html', 'r') as f:
+              new_html = f.read()
+              
+          with open('index.html', 'r') as f:
+              content = f.read()
+              
+          updated_content = content.replace('', new_html)
+          
+          with open('index.html', 'w') as f:
+              f.write(updated_content)
+          "
+          
+          rm new_block.html
+
+      - name: Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "feat: Add new MV '${{ steps.parse.outputs.issueparser_song_title }}'"
+          file_pattern: index.html
+
+      - name: Close Issue
+        uses: peter-evans/close-issue@v3
+        with:
+          comment: "✅ Successfully added **${{ steps.parse.outputs.issueparser_song_title }}** to the website! Cloudflare Pages will rebuild shortly."
